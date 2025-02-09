@@ -1,0 +1,10 @@
+1) create kops user and add user to the sudoers group
+      sudo adduser kops
+      sudo echo "kops  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/kops
+      sudo su - kops
+
+2) Install kops software on an EC2 instance by running the commands
+      sudo apt install wget -y
+      sudo wget https://github.com/kubernetes/kops/releases/download/v1.22.0/kops-linux-amd64
+      sudo chmod +x kops-linux-amd64
+      sudo mv kops-linux-amd64 /usr/local/bin/kops
