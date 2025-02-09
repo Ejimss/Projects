@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springaboot-deployment
+  namespace: prod
+  labels:
+    type: springaboot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: springapp
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: springboot-app
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springboot-container
+        image: mylandmarktech/spring-boot-mongo
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "256Mi"
+            cpu: "400m"
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_DB_HOSTNAME
+          value: mongosvc
+        - name: MONGO_DB_USERNAME
+          value: ejay
+        - name: MONGO_DB_PASSWORD
+          value: ejay123
